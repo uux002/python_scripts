@@ -77,5 +77,27 @@ for notation in notations:
     if IsSymbol(notation):
         notationList.append(notation)
     elif IsOperation(notation):
-        
+        while(True):
+            topStackNotation = notationStack.Peek()
+            if topStackNotation is None or IsLeftBracket(topStackNotation):
+                notationStack.Push(notation)
+                break
+            elif IsHigherOrEqualPriority(topStackNotation,notation):
+                topStackNotation = notationStack.Pop()
+                notationList.append(topStackNotation)
+    elif IsLeftBracket(notation):
+        notationList.append(notation)
+    elif IsRightBracket(notation):
+        while(True):
+            topStackNotation = notationStack.Peek()
+            if topStackNotation is None or IsLeftBracket(topStackNotation):
+                break
+            else:
+                topStackNotation.pop()
+                notationList.append(topStackNotation)
+
+
+for notation in notationList:
+    print(notation)
+            
     
